@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { Client } from '../../clients/entities/client.entity';
 import { OrderItem } from './order-item.entity';
-
+import type { Relation } from 'typeorm';
 @Entity('customer_orders')
 export class CustomerOrder {
   @PrimaryGeneratedColumn() id: number;
@@ -18,9 +18,8 @@ export class CustomerOrder {
   @CreateDateColumn() createdAt: Date;
 
   @ManyToOne(() => Client, (c) => c.orders, { onDelete: 'RESTRICT' })
-  @JoinColumn({ name: 'clientId' })
-  client: Client;
+  @JoinColumn({ name: 'clientId' }) client: Relation<Client>;
 
   @Column() clientId: number;
-  @OneToMany(() => OrderItem, (i) => i.order) items: OrderItem[];
+  @OneToMany(() => OrderItem, (i) => i.order) items: Relation<OrderItem[]>;
 }

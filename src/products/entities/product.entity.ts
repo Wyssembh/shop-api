@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Category } from '../../categories/entities/category.entity';
 import { OrderItem } from '../../orders/entities/order-item.entity';
+import type { Relation } from 'typeorm';
 @Entity('products')
 export class Product {
   @PrimaryGeneratedColumn() id: number;
@@ -18,5 +19,5 @@ export class Product {
   @JoinColumn({ name: 'categoryId' })
   category: Category;
   @Column() categoryId: number;
-  @OneToMany(() => OrderItem, (item) => item.product) items: OrderItem[];
+  @OneToMany(() => OrderItem, (item) => item.product) items: Relation<OrderItem[]>;
 }
